@@ -1,0 +1,37 @@
+#include<bits/stdc++.h>
+using namespace std;
+ 
+int n, k;
+ 
+void sovle() {
+	cin >> n >> k;
+	int buoc = INT_MAX;
+	vector <int> arr(n+1,0);
+	vector <vector<int>> soBuoc(n+1);
+	vector <int> vtri(n+1, -1);
+	for (int i = 0;i < n;i++) {
+		soBuoc[i] = vector<int>();
+		cin >> arr[i];
+	}
+	for (int i = 0;i < n;i++) {
+		soBuoc[arr[i]].push_back(i - vtri[arr[i]] - 1);
+		vtri[arr[i]] = i;
+	}
+	for (int i = 1;i <= k;i++) {
+		soBuoc[i].push_back(n - vtri[i]-1);
+		sort(soBuoc[i].rbegin(), soBuoc[i].rend());
+		int tmp = soBuoc[i][0] / 2;
+		if (soBuoc[i].size() > 1) {
+			tmp = max(tmp, soBuoc[i][1]);
+		}
+		buoc = min(buoc, tmp);
+	}
+	cout << buoc << endl;
+}
+int main() {
+	int t;cin >> t;
+	while (t--) {
+		sovle();
+	}
+	return 0;
+}
