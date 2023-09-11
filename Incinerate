@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+#define fc(i,a,b) for(int i=0;i<n;i++)
+#define ft(i,a,b) for(int i=a;i>=b;i--)
+using namespace std;
+
+int n, k;
+
+//bool cmp(pair<int, int> a,pair<int, int> b) {
+//	return a.first > b.first;
+//}
+void solve() {
+	cin >> n >> k;
+	vector<pair<int, int>> enemy(n);
+	fc(i, 0, n) {
+		cin >> enemy[i].first;
+	}
+	fc(i, 0, n) {
+		cin >> enemy[i].second;
+	}
+	sort(enemy.begin(), enemy.end());
+	vector<int> dameEnemy(n);
+	dameEnemy[n - 1] = enemy[n - 1].second;
+	ft(i, n - 2, 0) {
+		dameEnemy[i] = min(dameEnemy[i + 1], enemy[i].second);
+	}
+	int sumDame = 0;
+	int vtri = 0;
+	while (sumDame < enemy[n - 1].first && k>0) {
+		sumDame += k;
+		while (enemy[vtri].first - sumDame <= 0 && vtri<n-1) {
+			vtri++;
+		}
+		k -= dameEnemy[vtri];
+	}
+	cout << (sumDame >= enemy[n - 1].first ? "YES" : "NO") << endl;
+}
+
+int main() {
+	int t; cin >> t;
+	while (t--) {
+		solve();
+	}
+	return 0;
+}
