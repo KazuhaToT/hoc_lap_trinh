@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+#define f(i,a,b) for(long long i=a;i<b;i++)
+using namespace std;
+
+int n,q;
+void solve() {
+	cin >> n >> q;
+	vector<long long> a(n + 1),kq(q+1);
+	vector<pair<long long, long long>> k;
+
+	long long sum = 0;
+	f(i, 0, n) { 
+		cin >> a[i];
+		sum += a[i];
+	}
+	long long tmp;
+	f(i, 0, q) { 
+		cin >> tmp;
+		k.push_back({ tmp,i });
+	}
+	sort(k.begin(),k.end());
+	long long sumHight = 0;
+	long long vtri = 0;
+	f(i, 0, q) {
+		f(j, vtri, n) {
+			if (k[i].first < a[j]) { 
+				vtri = j;
+				break;
+			}
+			sumHight += a[j];
+		}
+		if (sumHight > sum) sumHight = sum;
+		kq[k[i].second] = sumHight;
+	}
+	f(i, 0, q)cout << kq[i] << " ";
+	cout << endl;
+}
+int main() {
+	int t;cin >> t;
+	while (t--) {
+		solve();
+	}
+	return 0;
+}
